@@ -1,4 +1,5 @@
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,12 +11,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.example.news.MyViewModel.MyViewModel
 import com.example.news.Screen.NewsItemCard
+import com.example.news.models.Article
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeUI(viewModel: MyViewModel) {
+fun HomeUI(
+    viewModel: MyViewModel,
+    navController: NavController
+) {
 
     val categories = listOf("general", "business", "sports", "technology", "health", "entertainment")
     var selectedCategory by remember { mutableStateOf("general") }
@@ -25,9 +31,8 @@ fun HomeUI(viewModel: MyViewModel) {
     val isLoading = viewModel.isLoading.collectAsState().value
     val errorMessage = viewModel.errorMessage.collectAsState().value
 
-    // Fetch news when category changes or searchQuery changes
+    // Fetch news when category or search query changes
     LaunchedEffect(selectedCategory, searchQuery) {
-        // You can update your ViewModel function to accept searchQuery if needed
         viewModel.getNewsByCategory(selectedCategory, searchQuery)
     }
 
@@ -96,7 +101,10 @@ fun HomeUI(viewModel: MyViewModel) {
                         verticalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         items(articles) { article ->
-                            NewsItemCard(article)
+                            NewsItemCard(article = article, onClick = {
+                                viewModel.selectArticle(article)
+                                navController.navigate("details")
+                            })
                         }
                     }
                 }

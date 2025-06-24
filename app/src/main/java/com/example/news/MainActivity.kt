@@ -11,7 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.navigation.Navigation
 import com.example.news.MyViewModel.MyViewModel
+import com.example.news.navigation.NavigationGraph
 import com.example.news.ui.theme.NewsTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,18 +25,9 @@ class MainActivity : ComponentActivity() {
             val viewModel = remember { MyViewModel() }
 
             NewsTheme {
-                Scaffold(
-                    modifier = Modifier.fillMaxSize()
-                ) { paddingValues ->
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(paddingValues) // use the scaffold's inner padding
-                    ) {
-                        HomeUI(viewModel = viewModel)
-                    }
-                }
+                    NavigationGraph(viewModel)
             }
         }
     }
 }
+

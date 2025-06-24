@@ -1,3 +1,5 @@
+import org.gradle.kotlin.dsl.implementation
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -70,5 +72,14 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
 
     implementation("androidx.compose.material3:material3:1.3.2")
+
+
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.9.1")
+
+    implementation("androidx.navigation:navigation-compose:2.9.0")
+
+    implementation ("androidx.compose.material3:material3:1.3.2")
+
+
 
 }
